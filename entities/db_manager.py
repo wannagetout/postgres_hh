@@ -1,9 +1,15 @@
-import psycopg2
+from typing import List
 
-class DBManager:
+from db_connector import DBConnector
 
-    def __init__(self):
-        pass
+
+class DBManager(DBConnector):
+    """
+    Класс для передачи данных в БД
+    """
+
+    def __init__(self, info: List[dict]):
+        super().__init__(info)
 
     def get_companies_and_vacancies_count(self):
         pass
