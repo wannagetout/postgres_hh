@@ -21,7 +21,7 @@ def get_vacancies_json_from_request(employer_param: List[int]) -> List[request]:
                 'name': r['name'],
                 'salary': r['salary']['from'] or r['salary']['to'],
                 'description': r['snippet']['requirement'],
-                'employer_id': r['employer']['id']
+                'employee_id': r['employer']['id']
             }
         ] for r in request_.json()['items'] if r['salary']
     ]
@@ -39,8 +39,4 @@ def get_employees_json_from_request(employer_param: List) -> List[dict]:
             'name': r['name']
         } for r in employees_list
     ]
-
-
-reqes = get_employees_json_from_request(EMPLOYEES)
-for r in reqes:
-    print(r)
+45

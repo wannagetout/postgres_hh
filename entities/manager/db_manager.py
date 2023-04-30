@@ -1,8 +1,6 @@
 from typing import List
 
-from db_connector import DBConnector
-
-from utils import get_vacancies_json_from_request
+from entities.base.db_connector import DBConnector
 
 
 class DBManager(DBConnector):
@@ -18,7 +16,7 @@ class DBManager(DBConnector):
         vacancies = self.get_companies_and_vacancies_count()
         return vacancies
 
-    def get_all_vacancies(self) -> dict:
+    def get_vacancies(self) -> dict:
         vacancies = self.get_all_vacancies()
         return vacancies
 
@@ -34,5 +32,5 @@ class DBManager(DBConnector):
         vacancies = self.get_vacancies_with_keyword(keyword)
         return vacancies
 
-    def add_vacancies(self, table_name: str) -> None:
+    def add_entities(self, table_name: str) -> None:
         self.add(self.info, table_name)
