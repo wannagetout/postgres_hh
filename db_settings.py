@@ -1,6 +1,6 @@
 CONNECT_PARAMS = {
         'host': 'localhost',
-        'database': 'hh_postgres',
+        'database': 'postgres',
         'user': 'postgres',
         'password': 'postgres'
     }
