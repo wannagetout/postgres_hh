@@ -103,6 +103,7 @@ class DBConnector:
                            "name VARCHAR(80));"
                            )
             connection.commit()
+
             cursor.execute("CREATE TABLE vacancies"
                            "(vacancy_id INTEGER PRIMARY KEY,"
                            "name VARCHAR(150),"
