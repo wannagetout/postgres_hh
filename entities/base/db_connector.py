@@ -4,8 +4,6 @@ from typing import List
 
 import psycopg2
 
-from db_settings import CONNECT_PARAMS
-
 
 class DBConnector:
 
@@ -20,18 +18,11 @@ class DBConnector:
     for param in params:
         db[param[0]] = param[1]
 
-    CONNECTION = psycopg2.connect(**db)
-
     def __init__(self):
         self.info = None
 
     def get_all_vacancies(self):
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM vacancies;")
         vacancies = cursor.fetchall()
@@ -40,12 +31,7 @@ class DBConnector:
         return vacancies
 
     def get_companies_and_vacancies_count(self):
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         cursor.execute(
             "SELECT employee_id, COUNT(vacancy_id) "
@@ -57,12 +43,7 @@ class DBConnector:
         return vacancies_count
 
     def get_avg_salary(self):
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         cursor.execute("SELECT AVG(salary) FROM vacancies;")
         avg_salary = cursor.fetchall()
@@ -71,12 +52,7 @@ class DBConnector:
         return avg_salary
 
     def get_vacancies_with_higher_salary(self):
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         cursor.execute(
             "SELECT * FROM vacancies ORDER BY salary DESC LIMIT 10;"
@@ -87,12 +63,7 @@ class DBConnector:
         return highest_salary
 
     def get_vacancies_with_keyword(self, keyword: str) -> dict:
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         cursor.execute(
             "SELECT * FROM vacancies WHERE name LIKE '%{}' ORDER BY name".format(keyword)
@@ -102,12 +73,7 @@ class DBConnector:
         return vacancies_with_keyword
 
     def add(self, info: List[dict], table_name: str) -> None:
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         if table_name == 'employees':
             for employee in info:
@@ -129,12 +95,7 @@ class DBConnector:
                 connection.commit()
 
     def create_databases(self) -> None:
-        connection = psycopg2.connect(
-            host=CONNECT_PARAMS["host"],
-            database=CONNECT_PARAMS["database"],
-            user=CONNECT_PARAMS["user"],
-            password=CONNECT_PARAMS["password"]
-        )
+        connection = psycopg2.connect(**self.db)
         try:
             cursor = connection.cursor()
             cursor.execute("CREATE TABLE employees "
