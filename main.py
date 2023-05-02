@@ -9,11 +9,11 @@ if __name__ == '__main__':
     }
 
     connector = DBConnector()
-    # connector.create_databases()
-    # employees = get_employees_json_from_request(EMPLOYEES)
-    # vacancies = get_vacancies_json_from_request(EMPLOYEES)
-    # connector.add(employees, TABLE_NAMES['employees'])
-    # connector.add(vacancies, TABLE_NAMES['vacancies'])
+    connector.create_databases()
+    employees = get_employees_json_from_request(EMPLOYEES)
+    vacancies = get_vacancies_json_from_request(EMPLOYEES)
+    connector.add(employees, TABLE_NAMES['employees'])
+    connector.add(vacancies, TABLE_NAMES['vacancies'])
 
     while True:
         user_input = int(
