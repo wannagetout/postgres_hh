@@ -45,7 +45,7 @@ class DBConnector:
     def get_avg_salary(self):
         connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
-        cursor.execute("SELECT AVG(salary) FROM vacancies;")
+        cursor.execute("SELECT CEILING(AVG(salary)) as AVG_SALARY FROM vacancies;")
         avg_salary = cursor.fetchall()
         connection.commit()
         connection.close()
@@ -66,7 +66,7 @@ class DBConnector:
         connection = psycopg2.connect(**self.db)
         cursor = connection.cursor()
         cursor.execute(
-            "SELECT * FROM vacancies WHERE name LIKE '%{}' ORDER BY name".format(keyword)
+            "SELECT * FROM vacancies WHERE name LIKE '%{}%' ORDER BY name".format(keyword)
         )
         vacancies_with_keyword = cursor.fetchall()
         connection.close()
@@ -103,12 +103,12 @@ class DBConnector:
                            "name VARCHAR(80));"
                            )
             connection.commit()
-            cursor.execute("CREATE TABLE vacancy"
-                           "vacancy_id INTEGER PRIMARY KEY,"
+            cursor.execute("CREATE TABLE vacancies"
+                           "(vacancy_id INTEGER PRIMARY KEY,"
                            "name VARCHAR(150),"
                            "salary INTEGER,"
                            "description text,"
-                           "employee_id INTEGER REFERENCES employees.employee_id);"
+                           "employee_id INTEGER REFERENCES employees(employee_id));"
                            )
             connection.commit()
             connection.close()
