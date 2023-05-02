@@ -104,7 +104,7 @@ class DBConnector:
                            )
             connection.commit()
             cursor.execute("CREATE TABLE vacancy"
-                           "vacancy_id INTEGER PRIMARY KEY,"
+                           "(vacancy_id INTEGER PRIMARY KEY,"
                            "name VARCHAR(150),"
                            "salary INTEGER,"
                            "description text,"
